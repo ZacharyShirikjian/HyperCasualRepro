@@ -8,6 +8,8 @@ public class GameMaster : MonoBehaviour
     //This script is used for the GameMaster GameObject, which controls all of the major functions in the game.
 
     //REFERENCES//
+        //Reference to the Progress Bar which is on top of the screen 
+        private Slider progressBar; 
 
     //VARIABLES//
 
@@ -20,6 +22,8 @@ public class GameMaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        progressBar = GameObject.Find("ProgressBar").GetComponent<Slider>();
+        progressBar.maxValue = totalSnowBalls;
         curSnowBallsCollected = 0;
     }
 
@@ -42,7 +46,11 @@ public class GameMaster : MonoBehaviour
     //This method gets called whenever a player collects a Snow Ball. 
     //Increase the Counter by 1
     //And enable the Outlined Portion of that particular Snow Ball GameObject.
-    //public void increaseSnowBallCounter()
-    //{}
-    //
+    public void IncreaseSnowBallCounter()
+    {
+        Debug.Log("Plow has collided with a Snow Ball");
+        curSnowBallsCollected++;
+        progressBar.value += 1;
+
+    }
 }

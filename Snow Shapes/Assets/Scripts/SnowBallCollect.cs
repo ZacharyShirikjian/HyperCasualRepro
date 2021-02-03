@@ -38,8 +38,7 @@ public class SnowBallCollect : MonoBehaviour
     {
         if(other.tag == "Plow")
         {
-            Debug.Log("Plow has collided with a Snow Ball");
-            gm.curSnowBallsCollected++;
+            gm.IncreaseSnowBallCounter();
             this.gameObject.SetActive(false);
         }
     }
