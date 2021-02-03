@@ -57,7 +57,7 @@ public class MovePlow : MonoBehaviour
             //AND if the player has touched on the Snow Plow (the touch has collided with the snow plow) 
             if(touchInput.phase == TouchPhase.Moved)
             {
-                Debug.Log("Moving the plow");
+                //Debug.Log("Moving the plow");
                 rb.constraints = RigidbodyConstraints.FreezePositionY;
 
                 //Camera.main.ScreenToWorldPoint is used because otherwise the touchInput values are off-screen
@@ -77,7 +77,7 @@ public class MovePlow : MonoBehaviour
              */
             else if (touchInput.phase == TouchPhase.Ended)
             {
-                Debug.Log("Stop moving the plow");
+                //Debug.Log("Stop moving the plow");
                 touchPos.y = 2.35f;
             }
 
