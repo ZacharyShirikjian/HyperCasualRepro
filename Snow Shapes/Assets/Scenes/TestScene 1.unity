@@ -202,18 +202,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 118164890}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 331054336}
-        m_MethodName: LoadNextLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &118164890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +345,6 @@ GameObject:
   - component: {fileID: 331054334}
   - component: {fileID: 331054333}
   - component: {fileID: 331054332}
-  - component: {fileID: 331054336}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -446,18 +434,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &331054336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 331054331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e65a044065ad6204598c0ad84f5a765a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &371480917
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,7 +650,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0.36085194, b: 0.4811321, a: 0}
+  m_BackGroundColor: {r: 0.3936414, g: 0, b: 0.6603774, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -837,8 +813,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
-  m_fontSizeBase: 42
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1683,7 +1659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9136003baa1c7de4983644c88ad384f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curLevel: 1
+  curLevel: 2
   curSnowBallsCollected: 0
   totalSnowBalls: 3
 --- !u!1 &2042580167

@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//The documentation for the build index was used as a reference for figuring out how to get the specific build index of a scene:
+//https://docs.unity3d.com/ScriptReference/SceneManagement.Scene-buildIndex.html
+
 public class TitleScreen : MonoBehaviour
 {
-    //This script is used for the buttons on the Title Screen.
+    //This script is used for the buttons on the Title Screen, and during gameplay. 
 
     void Start()
     {
@@ -26,6 +29,15 @@ public class TitleScreen : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+    }
+
+    /*
+     * This method gets called when the player taps on the "NextLevel" button whenever they complete a level.
+     * Load the next scene in the build index.
+     */
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 

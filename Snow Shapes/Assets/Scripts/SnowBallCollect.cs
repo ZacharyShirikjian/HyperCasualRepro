@@ -39,7 +39,7 @@ public class SnowBallCollect : MonoBehaviour
         if(other.tag == "Plow")
         {
             gm.IncreaseSnowBallCounter();
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
         }
     }
 }
