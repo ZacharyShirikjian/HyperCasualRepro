@@ -44,8 +44,8 @@ public class SnowBallCollect : MonoBehaviour
         {
             gm.IncreaseSnowBallCounter();
             partOfOutline.SetActive(true);
-            this.transform.SetParent(other.gameObject.transform);
-            //this.gameObject.SetActive(false);
+            //this.transform.SetParent(other.gameObject.transform);
+            this.gameObject.SetActive(false);
         }
     }
 }
