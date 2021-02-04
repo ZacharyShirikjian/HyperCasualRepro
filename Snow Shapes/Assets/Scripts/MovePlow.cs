@@ -19,6 +19,9 @@ public class MovePlow : MonoBehaviour
         //Float holding the amount of speed which the snow plow moves at 
         //public float speed = 1.0f;
 
+        //Reference to the GameMaster
+        private GameMaster gm; 
+
     //VARIABLES//
     //Variable holding the current position of the Plow object 
     public Vector3 PlowPos;
@@ -33,6 +36,7 @@ public class MovePlow : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gm = GameObject.Find("GameMaster").GetComponent<GameMaster>();
     }
 
     // Update is called once per frame
@@ -40,10 +44,11 @@ public class MovePlow : MonoBehaviour
     {
         /*If the finger is held down on the screen (if there is a touch input),
          *Get the current position of the finger on the screen
-         *Set the position of the Snow Plow to that of from the user's finger 
+         *Set the position of the Snow Plow to that of from the user's finger.
+         *If the level is complete, the player can't move.
          */
 
-        if (Input.touchCount > 0)
+        if (gm.levelComplete == false && Input.touchCount > 0)
         {
             ////Set fingerHeldDown to true so the player knows the finger is held down on the screen 
             //fingerHeldDown = true;

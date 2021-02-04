@@ -14,12 +14,16 @@ public class SnowBallCollect : MonoBehaviour
 
     //REFERENCES//
         //Reference to the GameMaster
-        private GameMaster gm; 
+        private GameMaster gm;
+
+        //The specific part of the Snow Shape outline, which gets enabled once the player collects the Snow Ball.
+        public GameObject partOfOutline;
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameObject.Find("GameMaster").GetComponent<GameMaster>();
+        partOfOutline.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,6 +43,8 @@ public class SnowBallCollect : MonoBehaviour
         if(other.tag == "Plow")
         {
             gm.IncreaseSnowBallCounter();
+            partOfOutline.SetActive(true);
+            this.transform.SetParent(other.gameObject.transform);
             //this.gameObject.SetActive(false);
         }
     }
