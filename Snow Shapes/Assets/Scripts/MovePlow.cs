@@ -6,9 +6,9 @@ using UnityEngine;
 //The Touch.phase documentation from Unity was used as a reference for getting the keywords for the touch input to function:
 //https://docs.unity3d.com/ScriptReference/Touch-phase.html
 
-//This script was used as a reference for getting the Snow Plow to move across the screen:
-//Landern's script from the Drag GameObject with finger touch on SmartPhone post on Unity Answers (rudisky):
-//https://answers.unity.com/questions/1223838/drag-gameobject-with-finger-touch-in-smartphone.html 
+//Alexander Zotov's "Tutorial How To Move & Control 3D Object By Touch Dragging Finger By The Screen In Mobile Unity Game" 
+//was used as a reference for getting the Snow Plow to move across the screen:
+//https://www.youtube.com/watch?v=3_CX-KtsDic 
 
 public class MovePlow : MonoBehaviour
 {
@@ -16,8 +16,8 @@ public class MovePlow : MonoBehaviour
         //Reference to the Snow Plow's Rigidbody
         Rigidbody rb;
 
-        //Float holding the amount of speed which the snow plow moves at 
-        //public float speed = 1.0f;
+        //Variable for controlling the speed of the Snow Plow
+        public float speed = 0.005f;
 
         //Reference to the GameMaster
         private GameMaster gm; 
@@ -30,7 +30,10 @@ public class MovePlow : MonoBehaviour
     public Vector3 touchPos;
 
     //Bool to check if the finger is held down or not 
-    public bool fingerHeldDown = false; 
+    public bool fingerHeldDown = false;
+
+    //The Touch Object, which gets set to the first finger touched on the screen during player input.
+    private Touch touchInput;
 
     // Start is called before the first frame update
     void Start()
@@ -42,39 +45,49 @@ public class MovePlow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*If the finger is held down on the screen (if there is a touch input),
-         *Get the current position of the finger on the screen
-         *Set the position of the Snow Plow to that of from the user's finger.
-         *If the level is complete, the player can't move.
+        /*Check to see if the level is complete.
+         *If the level is complete, this code block doesn't run, 
+         *Because the player isn't supposed to move here. 
+         *
+         *If there is at least 1 finger touching the screen (Input.touchCount > 0),
+         *Move the Snow Plow based on the position of the player's finger. 
          */
 
         if (gm.levelComplete == false && Input.touchCount > 0)
         {
-            ////Set fingerHeldDown to true so the player knows the finger is held down on the screen 
-            //fingerHeldDown = true;
+            //Set fingerHeldDown to true so the player knows the finger is held down on the screen 
+            fingerHeldDown = true;
 
             //Get the touch Input from the user 
             //Since there is at least 1 touch (touchCount is > 0), 
             //Get the first touch on the screen as the TouchInput 
-            Touch touchInput = Input.GetTouch(0);
+            touchInput = Input.GetTouch(0);
 
             //If the current phase of the Touch Input is Moved (if the finger has moved across the screen) 
-            //AND if the player has touched on the Snow Plow (the touch has collided with the snow plow) 
+            //Set the position of the Snow Plow's transform based on the transform position of the user's touch input.
             if(touchInput.phase == TouchPhase.Moved)
             {
-                //Debug.Log("Moving the plow");
-                rb.constraints = RigidbodyConstraints.FreezePositionY;
+               // rb.constraints = RigidbodyConstraints.FreezePositionY;
 
-                //Camera.main.ScreenToWorldPoint is used because otherwise the touchInput values are off-screen
-                //ScreenToWorldPoint converts a pixel point to that which is visible within the world space (on-screen) 
-                //10f is used b/c it prevents 
-                touchPos = Camera.main.ScreenToWorldPoint(new Vector3(touchInput.position.x, touchInput.position.y, 10f));
-               // Vector3 temp = new Vector3(0, 2.35f, 0);
+                //Set the position of the Snow Plow's transform to be that of the difference between the touchInput's position 
+                //And the Snow Plow's Transform position (to have it so the touchInput's coordinates matches with the transform position that is on-screen.
+                //touchInput.deltaPosition is the "difference between the position recorded on the most recent update, and that recorded on the previous update."
+                //https://docs.unity3d.com/ScriptReference/Touch-deltaPosition.html 
 
-                //Set the current position of the Snow Plow based on the touch Input's position 
-                //PlowPos = touchPos;
-                transform.position = Vector3.Lerp(transform.position, touchPos, Time.deltaTime);
-                //transform.position += temp;
+                
+                this.transform.position = new Vector3(this.transform.position.x + touchInput.deltaPosition.x * Time.deltaTime,
+                                      this.transform.position.y,
+                                      this.transform.position.z + touchInput.deltaPosition.y * Time.deltaTime);
+               // //Camera.main.ScreenToWorldPoint is used because otherwise the touchInput values are off-screen
+               // //ScreenToWorldPoint converts a pixel point to that which is visible within the world space (on-screen) 
+               // //10f is used b/c it prevents 
+               // touchPos = Camera.main.ScreenToWorldPoint(new Vector3(touchInput.position.x, touchInput.position.y, 10f));
+               //// Vector3 temp = new Vector3(0, 2.35f, 0);
+
+               // //Set the current position of the Snow Plow based on the touch Input's position 
+               // //PlowPos = touchPos;
+               // transform.position = Vector3.Lerp(transform.position, touchPos, Time.deltaTime);
+               // //transform.position += temp;
             }
 
             /*If the finger is released from the screen,
@@ -83,7 +96,7 @@ public class MovePlow : MonoBehaviour
             else if (touchInput.phase == TouchPhase.Ended)
             {
                 //Debug.Log("Stop moving the plow");
-                touchPos.y = 2.35f;
+                fingerHeldDown = false; 
             }
 
             //fingerPos = touchInput.position;
