@@ -17,7 +17,7 @@ public class MovePlow : MonoBehaviour
         Rigidbody rb;
 
         //Variable for controlling the speed of the Snow Plow
-        public float speed = 0.005f;
+        public float speed = 1f;
 
         //Reference to the GameMaster
         private GameMaster gm; 
@@ -74,20 +74,15 @@ public class MovePlow : MonoBehaviour
                 //touchInput.deltaPosition is the "difference between the position recorded on the most recent update, and that recorded on the previous update."
                 //https://docs.unity3d.com/ScriptReference/Touch-deltaPosition.html 
 
-                
-                this.transform.position = new Vector3(this.transform.position.x + touchInput.deltaPosition.x * Time.deltaTime,
-                                      this.transform.position.y,
-                                      this.transform.position.z + touchInput.deltaPosition.y * Time.deltaTime);
-               // //Camera.main.ScreenToWorldPoint is used because otherwise the touchInput values are off-screen
-               // //ScreenToWorldPoint converts a pixel point to that which is visible within the world space (on-screen) 
-               // //10f is used b/c it prevents 
-               // touchPos = Camera.main.ScreenToWorldPoint(new Vector3(touchInput.position.x, touchInput.position.y, 10f));
-               //// Vector3 temp = new Vector3(0, 2.35f, 0);
+                rb.velocity = new Vector2(speed * (this.transform.position.x + touchInput.deltaPosition.x * Time.deltaTime), (speed * this.transform.position.z + touchInput.deltaPosition.y * Time.deltaTime));
 
-               // //Set the current position of the Snow Plow based on the touch Input's position 
-               // //PlowPos = touchPos;
-               // transform.position = Vector3.Lerp(transform.position, touchPos, Time.deltaTime);
-               // //transform.position += temp;
+                //TO-DO: UPDATE THE TRANSFORM POSITION SO THE OBJECT MOVES CORRECTLY 
+                //this.transform.position = ?;
+
+                //THIS SOLUTION WORKS, BUT BREAKS THROUGH WALLS. NEED A SOLUTION WHERE THE SNOW PLOW CAN'T MOVE THROUGH WALLS. 
+                //this.transform.position = new Vector3(this.transform.position.x + touchInput.deltaPosition.x * Time.deltaTime,
+                //   this.transform.position.y,
+                //    this.transform.position.z + touchInput.deltaPosition.y * Time.deltaTime);
             }
 
             /*If the finger is released from the screen,

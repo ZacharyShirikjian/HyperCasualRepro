@@ -1966,7 +1966,6 @@ GameObject:
   - component: {fileID: 1637696036}
   - component: {fileID: 1637696040}
   - component: {fileID: 1637696041}
-  - component: {fileID: 1637696042}
   m_Layer: 0
   m_Name: SnowPlow
   m_TagString: Plow
@@ -2076,23 +2075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3837502bdd9e2bf4990df7f360aa9ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.01
-  PlowPos: {x: 0, y: 0, z: 0}
-  touchPos: {x: 0, y: 0, z: 0}
-  fingerHeldDown: 0
---- !u!114 &1637696042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637696035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3837502bdd9e2bf4990df7f360aa9ec0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.01
+  speed: 1
   PlowPos: {x: 0, y: 0, z: 0}
   touchPos: {x: 0, y: 0, z: 0}
   fingerHeldDown: 0
