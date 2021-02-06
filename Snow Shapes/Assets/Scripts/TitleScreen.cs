@@ -33,11 +33,19 @@ public class TitleScreen : MonoBehaviour
 
     /*
      * This method gets called when the player taps on the "NextLevel" button whenever they complete a level.
-     * Load the next scene in the build index.
+     * Load the next scene in the build index (or the Title Screen, if the player is on Level 2 (will change later).
      */
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if(SceneManager.GetActiveScene().name == "TestScene2")
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
 
