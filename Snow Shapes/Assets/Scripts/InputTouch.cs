@@ -46,7 +46,7 @@ public class InputTouch : MonoBehaviour
             if(touchInput.phase == TouchPhase.Moved)
             {
                 Debug.Log("Moving");
-
+                gm.dragToStartText.SetText("");
                 //Camera.main.ScreenToWorldPoint converts the pixel coordinates of the touchInput into values which are able to be displayed on-screen to the Main Camera.
                 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touchInput.position.x, touchInput.position.y, Camera.main.nearClipPlane + 10f));
 

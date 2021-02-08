@@ -67,22 +67,16 @@ public class MovePlow : MonoBehaviour
             //Set the position of the Snow Plow's transform based on the transform position of the user's touch input.
             if(touchInput.phase == TouchPhase.Moved)
             {
-               // rb.constraints = RigidbodyConstraints.FreezePositionY;
+                // rb.constraints = RigidbodyConstraints.FreezePositionY;
 
                 //Set the position of the Snow Plow's transform to be that of the difference between the touchInput's position 
                 //And the Snow Plow's Transform position (to have it so the touchInput's coordinates matches with the transform position that is on-screen.
                 //touchInput.deltaPosition is the "difference between the position recorded on the most recent update, and that recorded on the previous update."
                 //https://docs.unity3d.com/ScriptReference/Touch-deltaPosition.html 
-
+                Debug.Log("test");
+                gm.dragToStartText.SetText("");
                 rb.velocity = new Vector2(speed * (this.transform.position.x + touchInput.deltaPosition.x * Time.deltaTime), (speed * this.transform.position.z + touchInput.deltaPosition.y * Time.deltaTime));
 
-                //TO-DO: UPDATE THE TRANSFORM POSITION SO THE OBJECT MOVES CORRECTLY 
-                //this.transform.position = ?;
-
-                //THIS SOLUTION WORKS, BUT BREAKS THROUGH WALLS. NEED A SOLUTION WHERE THE SNOW PLOW CAN'T MOVE THROUGH WALLS. 
-                //this.transform.position = new Vector3(this.transform.position.x + touchInput.deltaPosition.x * Time.deltaTime,
-                //   this.transform.position.y,
-                //    this.transform.position.z + touchInput.deltaPosition.y * Time.deltaTime);
             }
 
             /*If the finger is released from the screen,
@@ -93,11 +87,6 @@ public class MovePlow : MonoBehaviour
                 //Debug.Log("Stop moving the plow");
                 fingerHeldDown = false; 
             }
-
-            //fingerPos = touchInput.position;
-            //Debug.Log(fingerPos);
-            //Debug.Log(this.transform.position);
-            //this.transform.position = fingerPos;
         }
 
 

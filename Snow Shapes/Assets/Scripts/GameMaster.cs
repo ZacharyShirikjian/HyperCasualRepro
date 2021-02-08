@@ -11,7 +11,7 @@ public class GameMaster : MonoBehaviour
 
     //REFERENCES//
 
-        //GAME REFERENCES
+        //GAME REFERENCES//
 
         //Reference to the Player's Snow Plow GameObject
         private GameObject snowPlow;
@@ -33,8 +33,12 @@ public class GameMaster : MonoBehaviour
         //Reference to the Progress Bar which is on top of the screen 
         private Slider progressBar;
 
+        //Reference to the "Drag To Start" UI @ the beginning of the game 
+        public TextMeshProUGUI dragToStartText;
+
     //VARIABLES//
 
+        //Checks to see if the player has begun moving or not (drag to start 
         //The current level which the player is on, set in the inspector.
         public int curLevel; 
 
@@ -53,6 +57,8 @@ public class GameMaster : MonoBehaviour
         snowPlow = GameObject.Find("SnowPlow");
         snowShapeOutline.SetActive(true);
         snowShape.SetActive(false);
+        //dragToStartText = GameObject.Find("DragToStartText").GetComponent<TextMeshProUGUI>();
+        dragToStartText.SetText("DRAG TO START");
         levelCompleteText = GameObject.Find("LevelCompleteText").GetComponent<TextMeshProUGUI>();
         levelCompleteText.text = "";
         nextLevelBut = GameObject.Find("NextLevelButton");
