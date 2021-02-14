@@ -21,13 +21,19 @@ public class GameMaster : MonoBehaviour
 
         //Reference to the 3D model of the Snow Shape for the level which the player is on 
         public GameObject snowShape;
-    
-         //CANVAS REFERENCES//
 
-        //Reference to the Next Level Button, which appears when a level is completed 
+    //CANVAS REFERENCES//
+
+        //Reference to the LevelComplete Panel, which gets set to active once a level is completed.
+        //private GameObject levelCompletePanel;
+
+        //Reference to the text indicating to the player the current level which they are on.
+        private TextMeshProUGUI curLevelText; 
+        
+        ////Reference to the Next Level Button, which appears when a level is completed 
         private GameObject nextLevelBut; 
 
-        //Reference to the Level Complete! text that displays when a level is completed
+        ////Reference to the Level Complete! text that displays when a level is completed
         private TextMeshProUGUI levelCompleteText; 
 
         //Reference to the Progress Bar which is on top of the screen 
@@ -59,10 +65,15 @@ public class GameMaster : MonoBehaviour
         snowShape.SetActive(false);
         //dragToStartText = GameObject.Find("DragToStartText").GetComponent<TextMeshProUGUI>();
         dragToStartText.SetText("DRAG TO START");
+        curLevelText = GameObject.Find("CurLevelText").GetComponent<TextMeshProUGUI>();
+        curLevelText.SetText("Level " + curLevel);
         levelCompleteText = GameObject.Find("LevelCompleteText").GetComponent<TextMeshProUGUI>();
         levelCompleteText.text = "";
         nextLevelBut = GameObject.Find("NextLevelButton");
         nextLevelBut.SetActive(false);
+
+        //levelCompletePanel = GameObject.Find("LevelCompletePanel");
+        //levelCompletePanel.SetActive(false);
         progressBar = GameObject.Find("ProgressBar").GetComponent<Slider>();
         progressBar.maxValue = totalSnowBalls;
         curSnowBallsCollected = 0;
@@ -109,6 +120,8 @@ public class GameMaster : MonoBehaviour
         snowShapeOutline.SetActive(false);
         snowShape.SetActive(true);
         levelComplete = true;
+        //levelCompletePanel.SetActive(true);
+
         levelCompleteText.text = "Level " + curLevel + " Complete!";
         nextLevelBut.SetActive(true);
 
