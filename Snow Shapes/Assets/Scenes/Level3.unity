@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6357c1867a1f834bad3bbb80c1e8738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
 --- !u!65 &10807134
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7026,7 +7026,7 @@ MonoBehaviour:
   dragToStartText: {fileID: 707469733}
   curLevel: 3
   curSnowBallsCollected: 0
-  totalSnowBalls: 1
+  totalSnowBalls: 25
   levelComplete: 0
 --- !u!1 &2042580167
 GameObject:
