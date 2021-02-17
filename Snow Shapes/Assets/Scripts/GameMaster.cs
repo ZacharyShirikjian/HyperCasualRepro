@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
-
 
 public class GameMaster : MonoBehaviour
 {
@@ -42,6 +42,9 @@ public class GameMaster : MonoBehaviour
         //Reference to the "Drag To Start" UI @ the beginning of the game 
         public TextMeshProUGUI dragToStartText;
 
+        //Reference to a GameObject with the PauseMenu elements (Retry, Vibration On/Off, Exit) 
+        public GameObject pauseMenu; 
+
     //VARIABLES//
 
         //Checks to see if the player has begun moving or not (drag to start 
@@ -60,9 +63,13 @@ public class GameMaster : MonoBehaviour
         //Checks to see if the game is paused or not. 
         public bool isPaused = false;
 
+        //Checks to see if vibration is turned on or not.
+        public bool vibration = true; 
+
     // Start is called before the first frame update
     void Start()
     {
+        pauseMenu.SetActive(false);
         snowPlow = GameObject.Find("SnowPlow");
         snowShapeOutline.SetActive(true);
         snowShape.SetActive(false);
@@ -131,13 +138,65 @@ public class GameMaster : MonoBehaviour
     }
 
     /*
-     *This method gets called when the player taps the Pause Icon on the top left of the screen.
-     *Set paused = true,
-     *Freeze the game,
-     *And open up the pause menu.
+     *This method gets called when the player taps the Pause button on the top-left corner of the screen.
+     *Here, the player can restart the level, turn vibration on/off, or exit the pause menu. 
      */
     public void PauseGame()
     {
+        if(isPaused == true)
+        {
+            Time.timeScale = 1f;
+            isPaused = false;
+            pauseMenu.SetActive(false);
+        }
 
+        else if(isPaused == false)
+        {
+            isPaused = true;
+            Time.timeScale = 0f;
+            pauseMenu.SetActive(true);
+        }
+
+    }
+
+    /*
+     * 
+     *This method gets called when the player taps the Retry button on the top-left corner of the screen.
+     *Re-load the screen the player is currently on and restart the level. 
+     */
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    /*
+     *This method gets called when the player taps on the vibration toggle button on screen.
+     *The toggle turns vibration on/off during gameplay.
+     */
+     public void ToggleVibration()
+     {
+        //If vibration is off, turn it on
+        if (vibration == false)
+        {
+            vibration = true;
+        }
+
+        //If vibration is on, turn it off
+        else if(vibration == true)
+        {
+            vibration = false;
+        }
+     }
+
+
+    /*
+     *This method gets called when the player taps on the audio toggle button on screen.
+     *The toggle turns audio on/off during gameplay.
+     */
+     public void ToggleSound()
+    {
+        //If audio is off, turn it on 
+        
+        //If audio is on, turn it off 
     }
 }
