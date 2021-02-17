@@ -55,7 +55,10 @@ public class GameMaster : MonoBehaviour
         public int totalSnowBalls;
 
         //Checks to see if a level is complete. If the level is complete, the player can't move. 
-        public bool levelComplete; 
+        public bool levelComplete;
+
+        //Checks to see if the game is paused or not. 
+        public bool isPaused = false;
 
     // Start is called before the first frame update
     void Start()
@@ -124,6 +127,17 @@ public class GameMaster : MonoBehaviour
 
         levelCompleteText.text = "Level " + curLevel + " Complete!";
         nextLevelBut.SetActive(true);
+
+    }
+
+    /*
+     *This method gets called when the player taps the Pause Icon on the top left of the screen.
+     *Set paused = true,
+     *Freeze the game,
+     *And open up the pause menu.
+     */
+    public void PauseGame()
+    {
 
     }
 }
