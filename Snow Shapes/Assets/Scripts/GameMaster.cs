@@ -134,6 +134,7 @@ public class GameMaster : MonoBehaviour
         sfxSource.PlayOneShot(snowBallCollect);
         curSnowBallsCollected++;
         progressBar.value += 1;
+        Handheld.Vibrate(); //Vibrate the phone after collecting a Snow Ball. 
         if (curSnowBallsCollected >= totalSnowBalls)
         {
             //sfxSource.PlayOneShot(allSnowBallsCollected);
