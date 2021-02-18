@@ -7,13 +7,24 @@ using UnityEngine.SceneManagement;
 //The documentation for the build index was used as a reference for figuring out how to get the specific build index of a scene:
 //https://docs.unity3d.com/ScriptReference/SceneManagement.Scene-buildIndex.html
 
+//This script is used for the buttons on the Title Screen, and for the Next Level button during gameplay.
+
 public class TitleScreen : MonoBehaviour
 {
-    //This script is used for the buttons on the Title Screen, and during gameplay. 
+    //Reference to the SFXManager script 
+    private SFXManager sfxManager; 
+
+    //Reference to the SFXManager's AudioSource
+    private AudioSource sfxSource;
+
+    //Reference to the buttonClick SFX
+    private AudioClip buttonClick; 
 
     void Start()
     {
-        
+        sfxManager = GameObject.Find("SFXManager").GetComponent<SFXManager>();
+        sfxSource = GameObject.Find("SFXManager").GetComponent<AudioSource>();
+        buttonClick = sfxManager.buttonClickSFX;
     }
 
     // Update is called once per frame
@@ -28,22 +39,25 @@ public class TitleScreen : MonoBehaviour
      */
     public void StartGame()
     {
+        sfxSource.PlayOneShot(buttonClick);
         SceneManager.LoadScene(1);
     }
 
     /*
      * This method gets called when the player taps on the "NextLevel" button whenever they complete a level.
-     * Load the next scene in the build index (or the Title Screen, if the player is on Level 2 (will change later).
+     * Load the next scene in the build index (or the Title Screen, if the player is on Level 3.
      */
     public void LoadNextLevel()
     {
-        if(SceneManager.GetActiveScene().name == "TestScene2")
+        if(SceneManager.GetActiveScene().name == "Level3")
         {
+            sfxSource.PlayOneShot(buttonClick);
             SceneManager.LoadScene(0);
         }
 
         else
         {
+            sfxSource.PlayOneShot(buttonClick);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

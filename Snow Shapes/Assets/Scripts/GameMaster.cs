@@ -11,65 +11,86 @@ public class GameMaster : MonoBehaviour
 
     //REFERENCES//
 
+        //AUDIO CLIPS//
+
+        private AudioClip snowBallCollect;
+        private AudioClip allSnowBallsCollected;
+        private AudioClip levelCompleted;
+        private AudioClip buttonClick;
+
         //GAME REFERENCES//
 
         //Reference to the Player's Snow Plow GameObject
         private GameObject snowPlow;
 
-        //Reference to the outline of the Snow Shape for the level which the player is on 
-        public GameObject snowShapeOutline; 
+            //Reference to the outline of the Snow Shape for the level which the player is on 
+            public GameObject snowShapeOutline; 
 
-        //Reference to the 3D model of the Snow Shape for the level which the player is on 
-        public GameObject snowShape;
+            //Reference to the 3D model of the Snow Shape for the level which the player is on 
+            public GameObject snowShape;
 
-    //CANVAS REFERENCES//
+            //Reference to the SFXManager script 
+            private SFXManager sfxManager;
 
-        //Reference to the LevelComplete Panel, which gets set to active once a level is completed.
-        //private GameObject levelCompletePanel;
+            //Reference to the SFXManager's AudioSource component
+            private AudioSource sfxSource;
 
-        //Reference to the text indicating to the player the current level which they are on.
-        private TextMeshProUGUI curLevelText; 
+        //CANVAS REFERENCES//
+
+            //Reference to the LevelComplete Panel, which gets set to active once a level is completed.
+            //private GameObject levelCompletePanel;
+
+            //Reference to the text indicating to the player the current level which they are on.
+            private TextMeshProUGUI curLevelText; 
         
-        ////Reference to the Next Level Button, which appears when a level is completed 
-        private GameObject nextLevelBut; 
+            ////Reference to the Next Level Button, which appears when a level is completed 
+            private GameObject nextLevelBut; 
 
-        ////Reference to the Level Complete! text that displays when a level is completed
-        private TextMeshProUGUI levelCompleteText; 
+            ////Reference to the Level Complete! text that displays when a level is completed
+            private TextMeshProUGUI levelCompleteText; 
 
-        //Reference to the Progress Bar which is on top of the screen 
-        private Slider progressBar;
+            //Reference to the Progress Bar which is on top of the screen 
+            private Slider progressBar;
 
-        //Reference to the "Drag To Start" UI @ the beginning of the game 
-        public TextMeshProUGUI dragToStartText;
+            //Reference to the "Drag To Start" UI @ the beginning of the game 
+            public TextMeshProUGUI dragToStartText;
 
-        //Reference to a GameObject with the PauseMenu elements (Retry, Vibration On/Off, Exit) 
-        public GameObject pauseMenu; 
+            //Reference to a GameObject with the PauseMenu elements (Retry, Vibration On/Off, Exit) 
+            public GameObject pauseMenu; 
 
-    //VARIABLES//
+        //VARIABLES//
 
-        //Checks to see if the player has begun moving or not (drag to start 
-        //The current level which the player is on, set in the inspector.
-        public int curLevel; 
+            //Checks to see if the player has begun moving or not (drag to start 
+            //The current level which the player is on, set in the inspector.
+            public int curLevel; 
 
-        //The number of Snow Balls which the player has collected currently 
-        public int curSnowBallsCollected;
+            //The number of Snow Balls which the player has collected currently 
+            public int curSnowBallsCollected;
 
-        //The total amount of Snow Balls which the player has to collect to complete a level
-        public int totalSnowBalls;
+            //The total amount of Snow Balls which the player has to collect to complete a level
+            public int totalSnowBalls;
 
-        //Checks to see if a level is complete. If the level is complete, the player can't move. 
-        public bool levelComplete;
+            //Checks to see if a level is complete. If the level is complete, the player can't move. 
+            public bool levelComplete;
 
-        //Checks to see if the game is paused or not. 
-        public bool isPaused = false;
+            //Checks to see if the game is paused or not. 
+            public bool isPaused = false;
 
-        //Checks to see if vibration is turned on or not.
-        public bool vibration = true; 
+            //Checks to see if vibration is turned on or not.
+            public bool vibration = true; 
 
     // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
+
+        sfxManager = GameObject.Find("SFXManager").GetComponent<SFXManager>();
+        sfxSource = GameObject.Find("SFXManager").GetComponent<AudioSource>();
+        snowBallCollect = sfxManager.snowBallCollect;
+        allSnowBallsCollected = sfxManager.allSnowBallsCollected;
+        levelCompleted = sfxManager.levelComplete;
+        buttonClick = sfxManager.buttonClickSFX;
+
         snowPlow = GameObject.Find("SnowPlow");
         snowShapeOutline.SetActive(true);
         snowShape.SetActive(false);
@@ -97,10 +118,10 @@ public class GameMaster : MonoBehaviour
          * If the player has collected all of the Snow Balls in a level,
          * Call the SnowShapeComplete() method to end the level. 
         */
-        if(curSnowBallsCollected >= totalSnowBalls)
-        {
-            SnowShapeComplete(); 
-        }
+        //if(curSnowBallsCollected >= totalSnowBalls)
+        //{
+        //    SnowShapeComplete(); 
+        //}
     }
 
     //TO-DO 
@@ -110,8 +131,14 @@ public class GameMaster : MonoBehaviour
     public void IncreaseSnowBallCounter()
     {
         Debug.Log("Plow has collided with a Snow Ball");
+        sfxSource.PlayOneShot(snowBallCollect);
         curSnowBallsCollected++;
         progressBar.value += 1;
+        if (curSnowBallsCollected >= totalSnowBalls)
+        {
+            //sfxSource.PlayOneShot(allSnowBallsCollected);
+            SnowShapeComplete();
+        }
 
     }
 
@@ -130,6 +157,8 @@ public class GameMaster : MonoBehaviour
         snowShapeOutline.SetActive(false);
         snowShape.SetActive(true);
         levelComplete = true;
+        sfxSource.PlayOneShot(levelCompleted);
+
         //levelCompletePanel.SetActive(true);
 
         levelCompleteText.text = "Level " + curLevel + " Complete!";
@@ -145,6 +174,7 @@ public class GameMaster : MonoBehaviour
     {
         if(isPaused == true)
         {
+            sfxSource.PlayOneShot(buttonClick);
             Time.timeScale = 1f;
             isPaused = false;
             pauseMenu.SetActive(false);
@@ -152,6 +182,7 @@ public class GameMaster : MonoBehaviour
 
         else if(isPaused == false)
         {
+            sfxSource.PlayOneShot(buttonClick);
             isPaused = true;
             Time.timeScale = 0f;
             pauseMenu.SetActive(true);

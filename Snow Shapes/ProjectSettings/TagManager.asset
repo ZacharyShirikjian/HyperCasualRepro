@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Snow Ball
   - Plow
+  - SFXManager
   layers:
   - Default
   - TransparentFX
