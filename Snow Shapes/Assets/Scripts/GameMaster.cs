@@ -47,10 +47,14 @@ public class GameMaster : MonoBehaviour
             private GameObject nextLevelBut; 
 
             ////Reference to the Level Complete! text that displays when a level is completed
-            private TextMeshProUGUI levelCompleteText; 
+            private TextMeshProUGUI levelCompleteText;
 
             //Reference to the Progress Bar which is on top of the screen 
-            private Slider progressBar;
+            public float currentProgressBarValue; //the % of the ProgressBar which is filled 
+            private Image progressBar; //the outline of the Progress Bar
+            private Image progressBarFill; //the inside of the Progress Bar
+
+            //private Slider progressBar;
 
             //Reference to the "Drag To Start" UI @ the beginning of the game 
             public TextMeshProUGUI dragToStartText;
@@ -105,8 +109,12 @@ public class GameMaster : MonoBehaviour
 
         //levelCompletePanel = GameObject.Find("LevelCompletePanel");
         //levelCompletePanel.SetActive(false);
-        progressBar = GameObject.Find("ProgressBar").GetComponent<Slider>();
-        progressBar.maxValue = totalSnowBalls;
+        //progressBar = GameObject.Find("ProgressBar").GetComponent<Slider>();
+        //progressBar.maxValue = totalSnowBalls;
+        progressBar = GameObject.Find("ProgressBar").GetComponent<Image>();
+        progressBarFill = GameObject.FindWithTag("ProgressBarFill").GetComponent<Image>();
+        currentProgressBarValue = 0;
+
         curSnowBallsCollected = 0;
         levelComplete = false;
     }
@@ -122,6 +130,8 @@ public class GameMaster : MonoBehaviour
         //{
         //    SnowShapeComplete(); 
         //}
+        progressBarFill.fillAmount = (float)curSnowBallsCollected / (float)totalSnowBalls;
+        currentProgressBarValue = progressBar.fillAmount;
     }
 
     //TO-DO 
@@ -133,7 +143,24 @@ public class GameMaster : MonoBehaviour
         Debug.Log("Plow has collided with a Snow Ball");
         sfxSource.PlayOneShot(snowBallCollect);
         curSnowBallsCollected++;
-        progressBar.value += 1;
+        //progressBar.value += 1;
+
+        //This makes sure the currentProgressBarValue always stays at 1.
+        if(currentProgressBarValue > 1)
+        {
+            currentProgressBarValue = 1;
+        }
+
+        //If the Progress Bar has not reached its maximum,
+        //Get the percentage of the maximum filled amount (what % out of 100, represented as a decimal #)
+        //By dividing the current Snow Balls the player has collected by the total amount of Snow Balls in the level 
+        //Set the current Value of the Progress Bar integer to the current fill amount of the Progress Bar 
+        else if(currentProgressBarValue < (float) 1)
+        {
+            progressBarFill.fillAmount = (float) curSnowBallsCollected / (float) totalSnowBalls;
+            currentProgressBarValue = progressBar.fillAmount;
+        }
+        
         Handheld.Vibrate(); //Vibrate the phone after collecting a Snow Ball. 
         if (curSnowBallsCollected >= totalSnowBalls)
         {

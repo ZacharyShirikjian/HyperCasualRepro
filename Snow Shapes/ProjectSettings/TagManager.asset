@@ -7,6 +7,7 @@ TagManager:
   - Snow Ball
   - Plow
   - SFXManager
+  - ProgressBarFill
   layers:
   - Default
   - TransparentFX
