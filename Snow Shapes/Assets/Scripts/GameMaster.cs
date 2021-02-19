@@ -5,23 +5,31 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+[RequireComponent(typeof(Toggle))]
 public class GameMaster : MonoBehaviour
 {
     //This script is used for the GameMaster GameObject, which controls all of the major functions in the game.
 
+    //The script from Info Gamer's "How to Make an Audio Toggle in Unity (Snake Cubed Winners)" tutorial on YouTube
+    //Was used as a reference for getting an AudioToggle to function properly in Unity.
+    //https://www.youtube.com/watch?v=FR7zDjS0mO8
+
     //REFERENCES//
 
-        //AUDIO CLIPS//
+    //AUDIO CLIPS//
 
-        private AudioClip snowBallCollect;
+    private AudioClip snowBallCollect;
         private AudioClip allSnowBallsCollected;
         private AudioClip levelCompleted;
         private AudioClip buttonClick;
 
-        //GAME REFERENCES//
+    //GAME REFERENCES//
 
-        //Reference to the Player's Snow Plow GameObject
-        private GameObject snowPlow;
+            //Reference to the AudioToggle
+            public Toggle audioToggle; 
+
+            //Reference to the Player's Snow Plow GameObject
+            private GameObject snowPlow;
 
             //Reference to the outline of the Snow Shape for the level which the player is on 
             public GameObject snowShapeOutline; 
@@ -43,10 +51,10 @@ public class GameMaster : MonoBehaviour
             //Reference to the text indicating to the player the current level which they are on.
             private TextMeshProUGUI curLevelText; 
         
-            ////Reference to the Next Level Button, which appears when a level is completed 
+            //Reference to the Next Level Button, which appears when a level is completed 
             private GameObject nextLevelBut; 
 
-            ////Reference to the Level Complete! text that displays when a level is completed
+            //Reference to the Level Complete! text that displays when a level is completed
             private TextMeshProUGUI levelCompleteText;
 
             //Reference to the Progress Bar which is on top of the screen 
@@ -64,7 +72,6 @@ public class GameMaster : MonoBehaviour
 
         //VARIABLES//
 
-            //Checks to see if the player has begun moving or not (drag to start 
             //The current level which the player is on, set in the inspector.
             public int curLevel; 
 
@@ -86,6 +93,12 @@ public class GameMaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //If the player already set the volume of the AudioListener to be 0,
+        //Set the AudioToggle to be false. 
+        if(AudioListener.volume == 0)
+        {
+            audioToggle.isOn = false;
+        }
         pauseMenu.SetActive(false);
 
         sfxManager = GameObject.Find("SFXManager").GetComponent<SFXManager>();
@@ -98,7 +111,6 @@ public class GameMaster : MonoBehaviour
         snowPlow = GameObject.Find("SnowPlow");
         snowShapeOutline.SetActive(true);
         snowShape.SetActive(false);
-        //dragToStartText = GameObject.Find("DragToStartText").GetComponent<TextMeshProUGUI>();
         dragToStartText.SetText("DRAG TO START");
         curLevelText = GameObject.Find("CurLevelText").GetComponent<TextMeshProUGUI>();
         curLevelText.SetText("Level " + curLevel);
@@ -107,10 +119,7 @@ public class GameMaster : MonoBehaviour
         nextLevelBut = GameObject.Find("NextLevelButton");
         nextLevelBut.SetActive(false);
 
-        //levelCompletePanel = GameObject.Find("LevelCompletePanel");
-        //levelCompletePanel.SetActive(false);
-        //progressBar = GameObject.Find("ProgressBar").GetComponent<Slider>();
-        //progressBar.maxValue = totalSnowBalls;
+
         progressBar = GameObject.Find("ProgressBar").GetComponent<Image>();
         progressBarFill = GameObject.FindWithTag("ProgressBarFill").GetComponent<Image>();
         currentProgressBarValue = 0;
@@ -126,24 +135,21 @@ public class GameMaster : MonoBehaviour
          * If the player has collected all of the Snow Balls in a level,
          * Call the SnowShapeComplete() method to end the level. 
         */
-        //if(curSnowBallsCollected >= totalSnowBalls)
-        //{
-        //    SnowShapeComplete(); 
-        //}
         progressBarFill.fillAmount = (float)curSnowBallsCollected / (float)totalSnowBalls;
         currentProgressBarValue = progressBar.fillAmount;
     }
 
-    //TO-DO 
-    //This method gets called whenever a player collects a Snow Ball. 
-    //Increase the Counter by 1
-    //And enable the Outlined Portion of that particular Snow Ball GameObject.
+    /*
+     * This method gets called whenever a player collects a Snow Ball. 
+     * Increase the counter for the # of Snow Balls a player has collected by 1, 
+     * And enable the Outlined Portion of that particular Snow Ball GameObject.
+     */
+
     public void IncreaseSnowBallCounter()
     {
         Debug.Log("Plow has collided with a Snow Ball");
         sfxSource.PlayOneShot(snowBallCollect);
         curSnowBallsCollected++;
-        //progressBar.value += 1;
 
         //This makes sure the currentProgressBarValue always stays at 1.
         if(currentProgressBarValue > 1)
@@ -151,10 +157,11 @@ public class GameMaster : MonoBehaviour
             currentProgressBarValue = 1;
         }
 
-        //If the Progress Bar has not reached its maximum,
-        //Get the percentage of the maximum filled amount (what % out of 100, represented as a decimal #)
-        //By dividing the current Snow Balls the player has collected by the total amount of Snow Balls in the level 
-        //Set the current Value of the Progress Bar integer to the current fill amount of the Progress Bar 
+        /*If the Progress Bar has not reached its maximum,
+         *Get the percentage of the maximum filled amount (what % out of 100, represented as a decimal #)
+         *By dividing the current Snow Balls the player has collected by the total amount of Snow Balls in the level 
+         *Set the current Value of the Progress Bar integer to the current fill amount of the Progress Bar 
+        */
         else if(currentProgressBarValue < (float) 1)
         {
             progressBarFill.fillAmount = (float) curSnowBallsCollected / (float) totalSnowBalls;
@@ -164,10 +171,10 @@ public class GameMaster : MonoBehaviour
         //Vibrate the phone after collecting a Snow Ball, if vibration is set to being on.
         if (vibration == true)
         {
-            Debug.Log("Vibrate Phone");
             Handheld.Vibrate(); 
         }
 
+        //Check to make sure the phone doesn't vibrate if vibration is set to false.
         else if(vibration == false)
         {
             Debug.Log("DO NOT VIBRATE");
@@ -175,7 +182,6 @@ public class GameMaster : MonoBehaviour
 
         if (curSnowBallsCollected >= totalSnowBalls)
         {
-            //sfxSource.PlayOneShot(allSnowBallsCollected);
             SnowShapeComplete();
         }
 
@@ -269,11 +275,26 @@ public class GameMaster : MonoBehaviour
     /*
      *This method gets called when the player taps on the audio toggle button on screen.
      *The toggle turns audio on/off during gameplay.
+     *If the toggle is on,
+     *audioOn gets set to true,
+     *so turn on the AudioListener's volume for the SFXManager to be 1.
+     *If the toggle is off,
+     *audioOn gets set to false,
+     *so set the AudioListener's volume for the SFXManager to be 0. 
      */
-    public void ToggleSound()
+    public void ToggleSound(bool audioOn)
     {
-        //If audio is off, turn it on 
+        if (audioToggle.isOn == true)
+        {
+            audioOn = true;
+            AudioListener.volume = 1;
+        }
+
+        else if(audioToggle.isOn == false)
+        {
+            audioOn = false;
+            AudioListener.volume = 0;
+        }
         
-        //If audio is on, turn it off 
     }
 }
