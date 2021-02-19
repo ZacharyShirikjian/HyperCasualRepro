@@ -45,9 +45,6 @@ public class GameMaster : MonoBehaviour
 
         //CANVAS REFERENCES//
 
-            //Reference to the LevelComplete Panel, which gets set to active once a level is completed.
-            //private GameObject levelCompletePanel;
-
             //Reference to the text indicating to the player the current level which they are on.
             private TextMeshProUGUI curLevelText; 
         
@@ -205,8 +202,6 @@ public class GameMaster : MonoBehaviour
         snowShape.SetActive(true);
         levelComplete = true;
         sfxSource.PlayOneShot(levelCompleted);
-
-        //levelCompletePanel.SetActive(true);
 
         levelCompleteText.text = "Level " + curLevel + " Complete!";
         nextLevelBut.SetActive(true);
