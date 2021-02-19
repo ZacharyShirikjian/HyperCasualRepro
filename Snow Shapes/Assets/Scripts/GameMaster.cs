@@ -164,7 +164,13 @@ public class GameMaster : MonoBehaviour
         //Vibrate the phone after collecting a Snow Ball, if vibration is set to being on.
         if (vibration == true)
         {
+            Debug.Log("Vibrate Phone");
             Handheld.Vibrate(); 
+        }
+
+        else if(vibration == false)
+        {
+            Debug.Log("DO NOT VIBRATE");
         }
 
         if (curSnowBallsCollected >= totalSnowBalls)
