@@ -20,15 +20,8 @@ public class TitleScreen : MonoBehaviour
     //Reference to the buttonClick SFX
     private AudioClip buttonClick;
 
-    private GameMaster gm;
-
     void Start()
     {
-        if(SceneManager.GetActiveScene().buildIndex > 0)
-        {
-            gm = GameObject.Find("GameMaster").GetComponent<GameMaster>();
-
-        }
         sfxManager = GameObject.Find("SFXManager").GetComponent<SFXManager>();
         sfxSource = GameObject.Find("SFXManager").GetComponent<AudioSource>();
         buttonClick = sfxManager.buttonClickSFX;
@@ -62,21 +55,4 @@ public class TitleScreen : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
-
-    public void Vibrate()
-    {
-        if(gm.vibration == true)
-        {
-            Debug.Log("Vibrate");
-            Handheld.Vibrate();
-        }
-
-        else if(gm.vibration == false)
-        {
-            Debug.Log("DO NOT VIBRATE");
-        }
-
-    }
-
-
 }

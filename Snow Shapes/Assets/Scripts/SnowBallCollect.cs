@@ -19,17 +19,10 @@ public class SnowBallCollect : MonoBehaviour
         //The specific part of the Snow Shape outline, which gets enabled once the player collects the Snow Ball.
         public GameObject partOfOutline;
 
-    // Start is called before the first frame update
     void Start()
     {
         gm = GameObject.Find("GameMaster").GetComponent<GameMaster>();
         partOfOutline.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     /*This method gets called when the Snow Plow GameObject enters a Snow Ball's Trigger Collider.

@@ -22,16 +22,12 @@ public class InputTouch : MonoBehaviour
     private Vector3 direction; //the direction at which the Snow Plow moves at.
     //private Vector2 touchPos;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         gm = GameObject.Find("GameMaster").GetComponent<GameMaster>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //If there is at least 1 touch input on the screen
