@@ -160,8 +160,13 @@ public class GameMaster : MonoBehaviour
             progressBarFill.fillAmount = (float) curSnowBallsCollected / (float) totalSnowBalls;
             currentProgressBarValue = progressBar.fillAmount;
         }
-        
-        Handheld.Vibrate(); //Vibrate the phone after collecting a Snow Ball. 
+
+        //Vibrate the phone after collecting a Snow Ball, if vibration is set to being on.
+        if (vibration == true)
+        {
+            Handheld.Vibrate(); 
+        }
+
         if (curSnowBallsCollected >= totalSnowBalls)
         {
             //sfxSource.PlayOneShot(allSnowBallsCollected);
@@ -225,6 +230,7 @@ public class GameMaster : MonoBehaviour
      */
     public void RestartLevel()
     {
+        sfxSource.PlayOneShot(buttonClick);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -237,12 +243,14 @@ public class GameMaster : MonoBehaviour
         //If vibration is off, turn it on
         if (vibration == false)
         {
+            sfxSource.PlayOneShot(buttonClick);
             vibration = true;
         }
 
         //If vibration is on, turn it off
         else if(vibration == true)
         {
+            sfxSource.PlayOneShot(buttonClick);
             vibration = false;
         }
      }
@@ -252,7 +260,7 @@ public class GameMaster : MonoBehaviour
      *This method gets called when the player taps on the audio toggle button on screen.
      *The toggle turns audio on/off during gameplay.
      */
-     public void ToggleSound()
+    public void ToggleSound()
     {
         //If audio is off, turn it on 
         
