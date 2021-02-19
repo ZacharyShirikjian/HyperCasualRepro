@@ -16,6 +16,7 @@ public class SFXManager : MonoBehaviour
 
     //An instance of this SFXManager script, which is used for the DontDestroyOnLoad() method.
     private static SFXManager instance;
+
     private void Awake()
     {
         //If there is already an instance of this script in the current scene, then delete this duplicated instance

@@ -90,7 +90,6 @@ public class GameMaster : MonoBehaviour
             //Checks to see if vibration is turned on or not.
             public bool vibration = true; 
 
-    // Start is called before the first frame update
     void Start()
     {
         //If the player already set the volume of the AudioListener to be 0,
@@ -128,7 +127,6 @@ public class GameMaster : MonoBehaviour
         levelComplete = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         /*
