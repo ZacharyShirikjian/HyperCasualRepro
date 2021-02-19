@@ -194,6 +194,10 @@ public class GameMaster : MonoBehaviour
     {
         Debug.Log("All Snow Balls collected. Level Complete!");
         snowShapeOutline.SetActive(false);
+
+        //Hide the player to make the Snow Shape more visible 
+        snowPlow.SetActive(false);
+
         snowShape.SetActive(true);
         levelComplete = true;
         sfxSource.PlayOneShot(levelCompleted);
